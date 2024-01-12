@@ -33,8 +33,10 @@ export default function Login() {
   });
 
   return (
-    <div className="flex flex-row w-full h-screen bg-sky-400">
-      <div className="hidden xl:block xl:w-2/3 "></div>
+    <div className="flex flex-row w-full h-screen ">
+      <div className="hidden xl:w-2/3  xl:flex justify-center items-center">
+        <img src="/bg-login.png" alt="bg login" className="object-cover w-full h-full " />
+      </div>
       <div className="w-full xl:w-1/3 shadow-2xl bg-white">
         <div className="flex flex-col h-screen justify-center">
           <h1 className="font-semibold text-2xl text-center">Sistem Pakar Diagnosa Dispepsia</h1>

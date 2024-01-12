@@ -1,3 +1,5 @@
 import Button from "./Button";
 import Input from "./Input";
-export { Button, Input };
+import Loader from "./Loader";
+
+export { Button, Input, Loader };
