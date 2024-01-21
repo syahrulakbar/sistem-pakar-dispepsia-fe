@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Dashboard, Login, MainApp } from "../../pages";
+import { Login, MainApp } from "../../pages";
 import ProtectedRoute from "./ProtectedRoute";
 
 export default function Router() {
@@ -14,7 +14,6 @@ export default function Router() {
         }
       />
       <Route path="/login" element={<Login />} />
-      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
 }

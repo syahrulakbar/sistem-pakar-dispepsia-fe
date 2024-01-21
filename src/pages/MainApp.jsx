@@ -1,15 +1,30 @@
 import { Route, Routes } from "react-router-dom";
-import { Dashboard } from "../pages";
+import {
+  Blog,
+  Dashboard,
+  Gejala,
+  NotFound,
+  Penyakit,
+  Rule,
+  SettingAccount,
+  UserManagement,
+} from "../pages";
+import { Layout } from "../components";
 
 function MainApp() {
   return (
-    <Routes>
-      <Route exact path="/" element={<Dashboard />} />
-      <Route exact path="/certificate" element={<Dashboard />} />
-      <Route exact path="/project" element={<Dashboard />} />
-      <Route exact path="/skill" element={<Dashboard />} />
-      <Route exact path="/*" element={<Dashboard />} />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route exact path="/" element={<Dashboard />} />
+        <Route exact path="/blog" element={<Blog />} />
+        <Route exact path="/gejala" element={<Gejala />} />
+        <Route exact path="/rule" element={<Rule />} />
+        <Route exact path="/penyakit" element={<Penyakit />} />
+        <Route exact path="/user-management" element={<UserManagement />} />
+        <Route exact path="/setting-account" element={<SettingAccount />} />
+        <Route exact path="/*" element={<NotFound />} />
+      </Routes>
+    </Layout>
   );
 }
 

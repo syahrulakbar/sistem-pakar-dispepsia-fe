@@ -1,26 +1,27 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { Loader } from "../../components";
-import Cookies from "js-cookie";
 import PropTypes from "prop-types";
-import toast from "react-hot-toast";
+import { checkAuth } from "../Redux/Action";
 
 export default function ProtectedRoute({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuth, setIsAuth] = useState(false);
 
-  useEffect(() => {
-    const refreshToken = Cookies.get("refreshToken");
-
-    setTimeout(() => {
-      if (refreshToken) {
-        setIsAuth(true);
-      } else {
-        setIsAuth(false);
-        toast.error("Please login to continue");
-      }
+  const checkAUTH = async () => {
+    setIsLoading(true);
+    try {
+      await checkAuth();
+      setIsAuth(true);
       setIsLoading(false);
-    }, 5000);
+    } catch (error) {
+      setIsLoading(false);
+      setIsAuth(false);
+    }
+  };
+
+  useEffect(() => {
+    checkAUTH();
   }, []);
 
   if (isLoading) {
