@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 export default function Layout({ children }) {
   const { slideShow } = useSelector((state) => state.globalReducer);
-  console.log(slideShow);
 
   return (
     <>

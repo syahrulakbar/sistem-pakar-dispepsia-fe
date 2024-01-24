@@ -3,9 +3,19 @@ import FormLogin from "./Form/FormLogin";
 import Navbar from "./Navbar/Navbar";
 import Layout from "./Layout";
 import NavDesktop from "./Navbar/NavDesktop";
-import FormAccount from "./Form/FormAccount";
+import FormSettingAccount from "./Form/FormSettingAccount";
 import Modal from "./Modal/Modal";
 import ModalLogout from "./Modal/ModalLogout";
-import ShowModal from "./Modal/showModal";
+import ShowModal from "./Modal/ShowModal";
 
-export { ShowModal, ModalLogout, NavDesktop, Form, FormLogin, Navbar, Layout, FormAccount, Modal };
+export {
+  ShowModal,
+  ModalLogout,
+  NavDesktop,
+  Form,
+  FormLogin,
+  Navbar,
+  Layout,
+  FormSettingAccount,
+  Modal,
+};

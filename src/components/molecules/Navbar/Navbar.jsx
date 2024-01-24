@@ -33,6 +33,7 @@ function Navbar() {
         {navigationPages.map((page, id) => (
           <li key={id}>
             <NavLink
+              onClick={() => setShow(false)}
               to={page.path}
               style={({ isActive }) => ({
                 backgroundColor: isActive && "#475569",

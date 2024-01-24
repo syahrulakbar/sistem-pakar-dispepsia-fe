@@ -11,6 +11,8 @@ import {
 const initialState = {
   slideShow: false,
   modal: false,
+  isUpdate: false,
+  user: {},
   navigationPages: [
     {
       path: "/",
@@ -61,6 +63,16 @@ const globalReducer = (state = initialState, action) => {
       return {
         ...state,
         modal: action.payload,
+      };
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case "IS_UPDATE":
+      return {
+        ...state,
+        isUpdate: action.payload,
       };
     default:
       return state;

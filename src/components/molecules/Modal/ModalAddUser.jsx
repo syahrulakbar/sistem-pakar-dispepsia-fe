@@ -4,18 +4,21 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AiOutlineMail } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
-import Form from "./Form";
-import { updateAccount } from "../../../config/Redux/Action";
-import Cookies from "js-cookie";
+import Form from "../Form/Form";
+import { addAccount } from "../../../config/Redux/Action";
+import { useDispatch, useSelector } from "react-redux";
+import Modal from "./Modal";
 
-export default function FormAccount() {
-  const name = Cookies.get("name");
-  const email = Cookies.get("email");
+export default function ModalAddUser() {
+  const { isUpdate } = useSelector((state) => state.globalReducer);
+  const dispatch = useDispatch();
 
-  const handleLogin = async (values) => {
+  const handleSubmit = async (values) => {
     try {
-      if (values.password === "") delete values.password;
-      await updateAccount(values);
+      await addAccount(values);
+      dispatch({ type: "IS_UPDATE", payload: !isUpdate });
+      dispatch({ type: "SET_MODAL", payload: false });
+
       formik.setSubmitting(false);
       formik.resetForm();
     } catch (error) {
@@ -23,32 +26,31 @@ export default function FormAccount() {
     }
   };
 
+  const handleCancel = () => {
+    dispatch({ type: "SET_MODAL", payload: false });
+  };
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      name: name || "",
-      email: email || "",
+      name: "",
+      email: "",
       password: "",
       confirmPassword: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required"),
       email: Yup.string().email("Invalid Email").required("Email is required"),
-      password: Yup.string(),
+      password: Yup.string().required("Password is required"),
       confirmPassword: Yup.string()
         .oneOf([Yup.ref("password")], "Password must be match")
-        .when("password", (password, schema) => {
-          if (password.length >= 1) {
-            return schema;
-          }
-          return schema.required("Confirm Password is required");
-        }),
+        .required("Confrim Password is required"),
     }),
-    onSubmit: handleLogin,
+    onSubmit: handleSubmit,
   });
 
   const bodyContent = (
-    <form onSubmit={formik.handleSubmit} className="p-6 flex flex-col gap-8">
+    <form onSubmit={formik.handleSubmit} className="px-6 py-2 flex flex-col gap-5">
       <Input
         icon={<CiUser />}
         id="name"
@@ -85,13 +87,23 @@ export default function FormAccount() {
         formatPassword
         required
       />
-      <Button
-        type="submit"
-        label="Submit"
-        onClick={formik.handleSubmit}
-        disabled={formik.isSubmitting}
-      />
+      <div className="w-full flex xl:flex-row-reverse flex-col gap-5">
+        <Button
+          type="submit"
+          label="Submit"
+          onClick={formik.handleSubmit}
+          disabled={formik.isSubmitting}
+        />
+        <Button
+          outline
+          type="button"
+          label="Cancel"
+          onClick={handleCancel}
+          disabled={formik.isSubmitting}
+        />
+      </div>
     </form>
   );
-  return <Form bodyContent={bodyContent} />;
+
+  return <Modal title="Add Account" bodyContent={<Form bodyContent={bodyContent} />} />;
 }

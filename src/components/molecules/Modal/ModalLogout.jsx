@@ -26,6 +26,7 @@ export default function ModalLogout() {
   );
   return (
     <Modal
+      gap
       title="Logout"
       subTitle="You will be returned to the login screen"
       bodyContent={bodyContent}
