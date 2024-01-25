@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
 import globalReducer from "./globalReducer";
-const reducer = combineReducers({ globalReducer });
+import blogReducer from "./blogReducer";
+const reducer = combineReducers({ globalReducer, blogReducer });
 export default reducer;

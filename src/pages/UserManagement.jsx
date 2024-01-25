@@ -4,8 +4,6 @@ import toast from "react-hot-toast";
 import Cookies from "js-cookie";
 import { getAllAccount } from "../config/Redux/Action";
 import { Button } from "../components/atoms";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import { CiSearch } from "react-icons/ci";
 
 export default function UserManagement() {
@@ -15,32 +13,12 @@ export default function UserManagement() {
 
   const dispatch = useDispatch();
   const userId = Cookies.get("userId");
-  const handleSubmit = async (values) => {
-    try {
-      console.log(values);
-      formik.setSubmitting(false);
-      formik.resetForm();
-    } catch (error) {
-      formik.setSubmitting(false);
-    }
-  };
 
   useEffect(() => {
     getAllAccount(search).then((res) => {
       setUsers(res.data);
     });
   }, [search, isUpdate]);
-
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string(),
-    }),
-    onSubmit: handleSubmit,
-  });
 
   const handleDelete = (user) => {
     if (user.id === userId) {
@@ -106,7 +84,7 @@ export default function UserManagement() {
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                   {user.email}
                 </th>
-                <td className="px-6 py-4">Admin</td>
+                <td className="px-6 py-4">{user.role === 2 ? "Admin" : "User"}</td>
                 <td className="px-6 py-4 flex gap-4">
                   <button
                     type="button"

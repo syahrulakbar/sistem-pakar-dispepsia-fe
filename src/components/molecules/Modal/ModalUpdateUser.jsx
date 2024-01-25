@@ -12,7 +12,7 @@ import Modal from "./Modal";
 export default function ModalUpdateUser() {
   const { user, isUpdate } = useSelector((state) => state.globalReducer);
   const dispatch = useDispatch();
-  const { name, email } = user;
+  const { name, email, role } = user;
 
   const handleSubmit = async (values) => {
     try {
@@ -39,6 +39,7 @@ export default function ModalUpdateUser() {
     initialValues: {
       name: name || "",
       email: email || "",
+      role: role || 2,
       password: "",
       confirmPassword: "",
     },
@@ -59,7 +60,7 @@ export default function ModalUpdateUser() {
   });
 
   const bodyContent = (
-    <form onSubmit={formik.handleSubmit} className="px-6 py-2 flex flex-col gap-8">
+    <form onSubmit={formik.handleSubmit} className="px-6 py-2 flex flex-col gap-6">
       <Input
         icon={<CiUser />}
         id="name"
@@ -76,6 +77,18 @@ export default function ModalUpdateUser() {
         formik={formik}
         required
       />
+      <div className="flex flex-col">
+        <label htmlFor="role">Role</label>
+        <select
+          {...formik.getFieldProps("role")}
+          name="role"
+          id="role"
+          className="border focus:border-sky-400 border-slate-300 w-full h-10 p-2 rounded-lg"
+        >
+          <option value="2">Admin</option>
+          <option value="1">User</option>
+        </select>
+      </div>
       <Input
         icon={<CiLock />}
         id="password"

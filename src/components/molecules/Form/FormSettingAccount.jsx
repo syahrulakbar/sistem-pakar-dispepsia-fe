@@ -41,7 +41,7 @@ export default function FormSettingAccount() {
 
   useEffect(() => {
     getCurrentUser();
-  }, []);
+  }, [isUpdate]);
 
   const formik = useFormik({
     enableReinitialize: true,

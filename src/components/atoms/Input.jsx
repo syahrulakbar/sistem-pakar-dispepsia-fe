@@ -26,7 +26,9 @@ export default function Input({ ...rest }) {
           required={required}
           disabled={disabled}
           placeholder={placeholder}
-          className={`focus:outline-none  disabled:bg-gray-200 disabled:cursor-not-allowed border-2  w-full h-10 p-2 rounded-lg pl-8 ${
+          className={`focus:outline-none  disabled:bg-gray-200 disabled:cursor-not-allowed border-2  w-full h-10 p-2 rounded-lg ${
+            icon && "pl-8"
+          }  ${
             formik.touched[id] && formik.errors[id]
               ? "bg-red-100 border-red-300 focus:border-red-400"
               : "focus:border-sky-400 border-slate-300"

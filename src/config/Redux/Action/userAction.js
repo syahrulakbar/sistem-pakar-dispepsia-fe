@@ -64,6 +64,7 @@ export const getAccountById = async (userId) => {
   try {
     const axiosJWT = await AxiosJWTConfig();
     const response = await axiosJWT.get(`/users/${userId}`);
+
     return Promise.resolve({
       data: response.data.data,
     });
@@ -73,6 +74,20 @@ export const getAccountById = async (userId) => {
     toast.error(errorMessage || "Server Error");
     return Promise.reject({
       message: "Failed Get All Account",
+    });
+  }
+};
+export const checkIsAdmin = async () => {
+  try {
+    const axiosJWT = await AxiosJWTConfig();
+    await axiosJWT.get("/users/profile");
+    return Promise.resolve({
+      message: "Success Get Account",
+    });
+  } catch (error) {
+    console.error(error);
+    return Promise.reject({
+      message: "Failed Get Account",
     });
   }
 };

@@ -1,6 +1,6 @@
 import { CiLock, CiSearch } from "react-icons/ci";
 import { GiSatelliteCommunication } from "react-icons/gi";
-import { AiOutlineMail, AiTwotoneSetting, AiOutlineWarning } from "react-icons/ai";
+import { AiOutlineMail, AiTwotoneSetting, AiOutlineWarning, AiFillCamera } from "react-icons/ai";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { CgDanger } from "react-icons/cg";
 import {
@@ -46,6 +46,7 @@ import { GrAdd } from "react-icons/gr";
 export {
   IoMdBook,
   CiSearch,
+  AiFillCamera,
   LuNewspaper,
   RiHealthBookLine,
   BsThreeDotsVertical,
