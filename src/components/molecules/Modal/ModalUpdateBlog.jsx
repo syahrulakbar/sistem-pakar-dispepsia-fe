@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
 import { AiFillCamera } from "react-icons/ai";
 import { useState } from "react";
+import Editor from "react-simple-wysiwyg";
 
 export default function ModalUpdateBlog() {
   const { isUpdate } = useSelector((state) => state.globalReducer);
@@ -67,6 +68,7 @@ export default function ModalUpdateBlog() {
 
   const handleChangeImage = (event) => {
     const file = event.target.files[0];
+    console.log(file);
     formik.setFieldValue("image", file);
     setImgPreview(URL.createObjectURL(file));
   };
@@ -100,7 +102,12 @@ export default function ModalUpdateBlog() {
         {formik.errors.image && <p className="text-red-500 text-sm">{formik.errors.image}</p>}
       </div>
       <Input id="title" label="Title" formik={formik} required />
-      <Input id="description" label="Description" formik={formik} required />
+      <div>
+        <Editor {...formik.getFieldProps("description")} id="description" />
+        {formik.touched.description && formik.errors.description && (
+          <p className="text-red-500 text-sm">{formik.errors.description}</p>
+        )}
+      </div>
       <div className="w-full flex xl:flex-row-reverse flex-col gap-5">
         <Button
           type="submit"
@@ -118,5 +125,7 @@ export default function ModalUpdateBlog() {
       </div>
     </form>
   );
-  return <Modal title="Update Blog" bodyContent={<Form bodyContent={bodyContent} />} />;
+  return (
+    <Modal title="Update Blog" bodyContent={<Form bodyContent={bodyContent} />} small={false} />
+  );
 }

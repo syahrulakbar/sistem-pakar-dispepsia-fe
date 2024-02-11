@@ -13,7 +13,9 @@ export default function Layout({ children }) {
         <div className={`hidden ${slideShow ? "xl:w-[5%]" : "xl:w-[20%]"} xl:block  relative`}>
           <NavDesktop />
         </div>
-        <main className={`w-full ${slideShow ? "xl:w-[95%]" : "xl:w-[80%]"} p-5`}>{children}</main>
+        <main className={`w-full ${slideShow ? "xl:w-[95%]" : "xl:w-[80%]"} p-5 overflow-hidden`}>
+          {children}
+        </main>
       </div>
     </>
   );

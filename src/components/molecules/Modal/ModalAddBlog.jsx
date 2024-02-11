@@ -88,15 +88,21 @@ export default function ModalAddBlog() {
             id="image"
             name="image"
             type="file"
-            className="absolute z-10 p-0 h-[200px] opacity-0 cursor-pointer"
+            className="absolute z-10 p-0 h-[200px] w-full opacity-0 cursor-pointer"
             onChange={(event) => handleChangeImage(event)}
           />
         </div>
-        {formik.errors.image && <p className="text-red-500 text-sm">{formik.errors.image}</p>}
+        {formik.touched.image && formik.errors.image && (
+          <p className="text-red-500 text-sm">{formik.errors.image}</p>
+        )}
       </div>
       <Input id="title" label="Title" formik={formik} required />
-      {/* <Input id="description" label="Description" formik={formik} required /> */}
-      <Editor {...formik.getFieldProps("description")} id="description" />
+      <div>
+        <Editor {...formik.getFieldProps("description")} id="description" />
+        {formik.touched.description && formik.errors.description && (
+          <p className="text-red-500 text-sm">{formik.errors.description}</p>
+        )}
+      </div>
       <div className="w-full flex xl:flex-row-reverse flex-col gap-5">
         <Button
           type="submit"
@@ -114,5 +120,7 @@ export default function ModalAddBlog() {
       </div>
     </form>
   );
-  return <Modal title="Add New Blog" bodyContent={<Form bodyContent={bodyContent} />} />;
+  return (
+    <Modal title="Add New Blog" bodyContent={<Form bodyContent={bodyContent} />} small={false} />
+  );
 }
