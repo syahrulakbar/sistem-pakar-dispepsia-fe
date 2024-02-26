@@ -6,6 +6,9 @@ import ModalAddUser from "./ModalAddUser";
 import ModalDeleteBlog from "./ModalDeleteBlog";
 import ModalUpdateBlog from "./ModalUpdateBlog";
 import ModalAddBlog from "./ModalAddBlog";
+import ModalDeletePenyakit from "./ModalDeletePenyakit";
+import ModalAddPenyakit from "./ModalAddPenyakit";
+import ModalUpdatePenyakit from "./ModalUpdatePenyakit";
 
 export default function ShowModal() {
   const { modal } = useSelector((state) => state.globalReducer);
@@ -27,6 +30,12 @@ export default function ShowModal() {
       return <ModalUpdateBlog />;
     case "add-blog":
       return <ModalAddBlog />;
+    case "delete-penyakit":
+      return <ModalDeletePenyakit />;
+    case "add-penyakit":
+      return <ModalAddPenyakit />;
+    case "update-penyakit":
+      return <ModalUpdatePenyakit />;
     default:
       break;
   }

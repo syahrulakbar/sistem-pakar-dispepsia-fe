@@ -13,6 +13,7 @@ const initialState = {
   modal: false,
   isUpdate: false,
   user: {},
+  penyakit: {},
   navigationPages: [
     {
       path: "/",
@@ -58,6 +59,11 @@ const globalReducer = (state = initialState, action) => {
       return {
         ...state,
         slideShow: action.payload,
+      };
+    case "SET_PENYAKIT":
+      return {
+        ...state,
+        penyakit: action.payload,
       };
     case "SET_MODAL":
       return {
