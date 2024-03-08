@@ -14,6 +14,11 @@ const initialState = {
   isUpdate: false,
   user: {},
   penyakit: {},
+  penyakits: [],
+  gejalas: [],
+  gejala: {},
+  rules: [],
+  rule: {},
   navigationPages: [
     {
       path: "/",
@@ -64,6 +69,31 @@ const globalReducer = (state = initialState, action) => {
       return {
         ...state,
         penyakit: action.payload,
+      };
+    case "SET_PENYAKITS":
+      return {
+        ...state,
+        penyakits: action.payload,
+      };
+    case "SET_GEJALAS":
+      return {
+        ...state,
+        gejalas: action.payload,
+      };
+    case "SET_GEJALA":
+      return {
+        ...state,
+        gejala: action.payload,
+      };
+    case "SET_RULES":
+      return {
+        ...state,
+        rules: action.payload,
+      };
+    case "SET_RULE":
+      return {
+        ...state,
+        rule: action.payload,
       };
     case "SET_MODAL":
       return {

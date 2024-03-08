@@ -1,38 +1,34 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import toast from "react-hot-toast";
-import Cookies from "js-cookie";
-import { getAllAccount } from "../config/Redux/Action";
+import { getAllGejala } from "../config/Redux/Action";
 import { Button } from "../components/atoms";
 import { CiSearch } from "react-icons/ci";
 
 export default function Gejala() {
-  const [users, setUsers] = useState([]);
+  const [gejalas, setGejalas] = useState([]);
   const [search, setSearch] = useState("");
   const { isUpdate } = useSelector((state) => state.globalReducer);
 
   const dispatch = useDispatch();
-  const userId = Cookies.get("userId");
 
   useEffect(() => {
-    getAllAccount(search).then((res) => {
-      setUsers(res.data);
+    getAllGejala(search).then((res) => {
+      setGejalas(res.data);
     });
   }, [search, isUpdate]);
 
-  const handleDelete = (user) => {
-    if (user.id === userId) {
-      return toast.error("You can't delete your own account");
-    }
-    dispatch({ type: "SET_MODAL", payload: "delete-user" });
-    dispatch({ type: "SET_USER", payload: user });
+  const handleDelete = (gejala) => {
+    dispatch({ type: "SET_MODAL", payload: "delete-gejala" });
+    dispatch({ type: "SET_GEJALA", payload: gejala });
   };
-  const handleEdit = (user) => {
-    dispatch({ type: "SET_MODAL", payload: "update-user" });
-    dispatch({ type: "SET_USER", payload: user });
+  const handleEdit = (gejala) => {
+    dispatch({ type: "SET_MODAL", payload: "update-gejala" });
+    dispatch({ type: "SET_GEJALA", payload: gejala });
+    dispatch({ type: "SET_GEJALAS", payload: gejalas });
   };
   const handleAdd = () => {
-    dispatch({ type: "SET_MODAL", payload: "add-user" });
+    dispatch({ type: "SET_GEJALAS", payload: gejalas });
+    dispatch({ type: "SET_MODAL", payload: "add-gejala" });
   };
 
   return (
@@ -45,23 +41,26 @@ export default function Gejala() {
             </div>
             <input
               type="text"
-              placeholder="Search by name, email"
+              placeholder="Search by nama gejala"
               onChange={(e) => setSearch(e.target.value)}
               className={`focus:outline-none  disabled:bg-gray-200 disabled:cursor-not-allowed border-2  w-full xl:w-1/3 h-10 p-2 rounded-lg pl-8 focus:border-sky-400 border-slate-300`}
             />
           </div>
           <div className="w-full xl:w-[30%]">
-            <Button onClick={handleAdd} label="Add Account" />
+            <Button onClick={handleAdd} label="Tambah Data Gejala" />
           </div>
         </div>
         <table className="w-full text-sm text-left  text-gray-900 ">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
             <tr>
               <th scope="col" className="px-6 py-3 text-center">
-                No
+                Id Gejala
               </th>
               <th scope="col" className="px-6 py-3">
                 Nama Gejala
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Pertanyaan
               </th>
               <th scope="col" className="px-6 py-3">
                 Ya Tanya
@@ -81,27 +80,38 @@ export default function Gejala() {
             </tr>
           </thead>
           <tbody>
-            {users?.map((user, index) => (
-              <tr key={user.id} className="odd:bg-white  even:bg-gray-50  border-b ">
-                <td className="px-6 py-4 text-center">{index + 1}</td>
+            {gejalas?.map((gejala) => (
+              <tr key={gejala.id} className="odd:bg-white  even:bg-gray-50  border-b ">
+                <td className="px-6 py-4 text-center">{gejala.id}</td>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                  {user.name}
+                  {gejala.nama_gejala}
                 </th>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                  {user.email}
+                  {gejala.pertanyaan}
                 </th>
-                <td className="px-6 py-4">{user.role === 2 ? "Admin" : "User"}</td>
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                  {gejala.ya_tanya || "-"}
+                </th>
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                  {gejala.tidak_tanya || "-"}
+                </th>
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                  {gejala.mulai ? "Ya" : "Tidak"}
+                </th>
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                  {gejala.selesai ? "Ya" : "Tidak"}
+                </th>
                 <td className="px-6 py-4 flex gap-4">
                   <button
                     type="button"
-                    onClick={() => handleEdit(user)}
+                    onClick={() => handleEdit(gejala)}
                     className="font-medium text-blue-500 hover:underline"
                   >
                     Edit
                   </button>
                   <button
                     type="button"
-                    onClick={() => handleDelete(user)}
+                    onClick={() => handleDelete(gejala)}
                     className="font-medium text-red-500 hover:underline"
                   >
                     Delete

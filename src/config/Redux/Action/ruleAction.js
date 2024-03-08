@@ -1,10 +1,10 @@
 import toast from "react-hot-toast";
 import AxiosJWTConfig from "../../../utils/axiosJWT";
 
-export const getAllPenyakit = async (keyword = "") => {
+export const getAllRule = async (search) => {
   try {
     const axiosJWT = await AxiosJWTConfig();
-    const response = await axiosJWT.get(`/penyakit?keyword=${keyword}`);
+    const response = await axiosJWT.get(`/rule?keyword=${search}`);
     return Promise.resolve({
       data: response.data.data,
     });
@@ -13,61 +13,61 @@ export const getAllPenyakit = async (keyword = "") => {
     const errorMessage = error.response?.data.message;
     toast.error(errorMessage || "Server Error");
     return Promise.reject({
-      message: "Failed Get All Penyakit",
+      message: "Failed Get All Data Rule",
     });
   }
 };
 
-export const deletePenyakit = async (penyakitId) => {
+export const deleteRule = async (ruleId) => {
   try {
     const axiosJWT = await AxiosJWTConfig();
-    await axiosJWT.delete(`/penyakit/${penyakitId}`);
-    toast.success("Successfully Delete Data Penyakit");
+    await axiosJWT.delete(`/rule/${ruleId}`);
+    toast.success("Successfully Delete Data Rule");
     return Promise.resolve({
-      message: "Success Delete Data Penyakit",
+      message: "Success Delete Data Rule",
     });
   } catch (error) {
     console.error(error);
     const errorMessage = error.response?.data.message;
     toast.error(errorMessage || "Server Error");
     return Promise.reject({
-      message: "Failed Delete Data Penyakit",
+      message: "Failed Delete Data Rule",
     });
   }
 };
 
-export const addPenyakit = async (values) => {
+export const addRule = async (values) => {
   try {
     const axiosJWT = await AxiosJWTConfig();
-    await axiosJWT.post(`/penyakit`, values);
-    toast.success("Successfully Add Data Penyakit");
+    await axiosJWT.post(`/rule`, values);
+    toast.success("Successfully Add Data Rule");
     return Promise.resolve({
-      message: "Success Add Data Penyakit",
+      message: "Success Add Data Rule",
     });
   } catch (error) {
     console.error(error);
     const errorMessage = error.response?.data.message;
     toast.error(errorMessage || "Server Error");
     return Promise.reject({
-      message: "Failed Add Data Penyakit",
+      message: "Failed Add Data Rule",
     });
   }
 };
 
-export const updatePenyakit = async (values) => {
+export const updateRule = async (values) => {
   try {
     const axiosJWT = await AxiosJWTConfig();
-    await axiosJWT.patch(`/penyakit/${values.id}`, values);
-    toast.success("Successfully Update Data Penyakit");
+    await axiosJWT.patch(`/rule/${values.id}`, values);
+    toast.success("Successfully Update Data Rule");
     return Promise.resolve({
-      message: "Success Update Data Penyakit",
+      message: "Success Update Data Rule",
     });
   } catch (error) {
     console.error(error);
     const errorMessage = error.response?.data.message;
     toast.error(errorMessage || "Server Error");
     return Promise.reject({
-      message: "Failed Update Data Penyakit",
+      message: "Failed Update Data Rule",
     });
   }
 };
