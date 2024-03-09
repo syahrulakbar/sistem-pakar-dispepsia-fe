@@ -5,19 +5,19 @@ import Form from "../Form/Form";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
 import { updateRule } from "../../../config/Redux/Action";
+import Select from "react-select";
 
 export default function ModalUpdateRule() {
   const { isUpdate, gejalas, penyakits, rule } = useSelector((state) => state.globalReducer);
   const dispatch = useDispatch();
+  console.log(rule);
+
+  const optionGejala = gejalas.map((g) => ({ value: g.id, label: g.nama_gejala }));
+
   const handleSubmit = async (values) => {
     try {
       values.id = rule.id;
-      const transformedValues = {
-        ...values,
-        penyakit_id: values.penyakit_id === "" ? null : parseInt(values.penyakit_id),
-        gejala_ids: values.gejala_ids === "" ? null : parseInt(values.gejala_ids),
-      };
-      await updateRule(transformedValues);
+      await updateRule(values);
       dispatch({ type: "IS_UPDATE", payload: !isUpdate });
       dispatch({ type: "SET_MODAL", payload: false });
 
@@ -36,11 +36,11 @@ export default function ModalUpdateRule() {
     enableReinitialize: true,
     initialValues: {
       penyakit_id: rule?.penyakit.id || "",
-      gejala_ids: rule.gejalas[0].id || "",
+      gejala_ids: rule.gejalas.map((gejala) => gejala.id) || "",
     },
     validationSchema: Yup.object({
       penyakit_id: Yup.string().required("Nama Penyakit is required"),
-      gejala_ids: Yup.string().required("Gejala is required"),
+      gejala_ids: Yup.array().min(1, "Minimal 1 Gejala").required("Gejala is required"),
     }),
     onSubmit: handleSubmit,
   });
@@ -71,22 +71,21 @@ export default function ModalUpdateRule() {
       </div>
       <div>
         <label htmlFor="gejala_ids">Gejala</label>
-        <select
+        <Select
           name="gejala_ids"
           id="gejala_ids"
-          {...formik.getFieldProps("gejala_ids")}
-          className={`focus:outline-none  disabled:bg-gray-200 disabled:cursor-not-allowed border-2  w-full h-10 p-2 rounded-lg   ${
-            formik.touched.gejala_ids && formik.errors.gejala_ids
-              ? "bg-red-100 border-red-300 focus:border-red-400"
-              : "focus:border-sky-400 border-slate-300"
-          }`}
-        >
-          {gejalas?.map((g) => (
-            <option key={g.id} value={g.id}>
-              {g.nama_gejala}
-            </option>
-          ))}
-        </select>
+          value={optionGejala.filter((g) => formik.values.gejala_ids.includes(g.value))}
+          onChange={(e) =>
+            formik.setFieldValue(
+              "gejala_ids",
+              e.map((x) => x.value),
+            )
+          }
+          options={optionGejala}
+          isMulti
+          required
+        />
+
         {formik.touched.gejala_ids && formik.errors.gejala_ids && (
           <div className="text-sm text-red-500 mt-1">{formik.errors.gejala_ids}</div>
         )}

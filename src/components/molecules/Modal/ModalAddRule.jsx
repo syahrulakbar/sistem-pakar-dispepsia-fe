@@ -5,19 +5,17 @@ import Form from "../Form/Form";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
 import { addRule } from "../../../config/Redux/Action";
+import Select from "react-select";
 
 export default function ModalAddRule() {
   const { isUpdate, gejalas, penyakits } = useSelector((state) => state.globalReducer);
   const dispatch = useDispatch();
 
+  const optionGejala = gejalas.map((g) => ({ value: g.id, label: g.nama_gejala }));
+
   const handleSubmit = async (values) => {
     try {
-      const transformedValues = {
-        ...values,
-        penyakit_id: values.penyakit_id === "" ? null : parseInt(values.penyakit_id),
-        gejala_ids: values.gejala_ids === "" ? null : parseInt(values.gejala_ids),
-      };
-      await addRule(transformedValues);
+      await addRule(values);
       dispatch({ type: "IS_UPDATE", payload: !isUpdate });
       dispatch({ type: "SET_MODAL", payload: false });
 
@@ -36,11 +34,11 @@ export default function ModalAddRule() {
     enableReinitialize: true,
     initialValues: {
       penyakit_id: penyakits[0].id || "",
-      gejala_ids: gejalas[0].id || "",
+      gejala_ids: "",
     },
     validationSchema: Yup.object({
       penyakit_id: Yup.string().required("Nama Penyakit is required"),
-      gejala_ids: Yup.string().required("Gejala is required"),
+      gejala_ids: Yup.array().min(1, "Minimal 1 Gejala").required("Gejala is required"),
     }),
     onSubmit: handleSubmit,
   });
@@ -71,7 +69,21 @@ export default function ModalAddRule() {
       </div>
       <div>
         <label htmlFor="gejala_ids">Gejala</label>
-        <select
+        <Select
+          name="gejala_ids"
+          id="gejala_ids"
+          onChange={(e) =>
+            formik.setFieldValue(
+              "gejala_ids",
+              e.map((x) => x.value),
+            )
+          }
+          // {...formik.getFieldProps("gejala_ids")}
+          options={optionGejala}
+          isMulti
+          required
+        />
+        {/* <select
           name="gejala_ids"
           id="gejala_ids"
           {...formik.getFieldProps("gejala_ids")}
@@ -86,7 +98,7 @@ export default function ModalAddRule() {
               {g.nama_gejala}
             </option>
           ))}
-        </select>
+        </select> */}
         {formik.touched.gejala_ids && formik.errors.gejala_ids && (
           <div className="text-sm text-red-500 mt-1">{formik.errors.gejala_ids}</div>
         )}
