@@ -78,27 +78,10 @@ export default function ModalAddRule() {
               e.map((x) => x.value),
             )
           }
-          // {...formik.getFieldProps("gejala_ids")}
           options={optionGejala}
           isMulti
           required
         />
-        {/* <select
-          name="gejala_ids"
-          id="gejala_ids"
-          {...formik.getFieldProps("gejala_ids")}
-          className={`focus:outline-none  disabled:bg-gray-200 disabled:cursor-not-allowed border-2  w-full h-10 p-2 rounded-lg   ${
-            formik.touched.gejala_ids && formik.errors.gejala_ids
-              ? "bg-red-100 border-red-300 focus:border-red-400"
-              : "focus:border-sky-400 border-slate-300"
-          }`}
-        >
-          {gejalas?.map((g) => (
-            <option key={g.id} value={g.id}>
-              {g.nama_gejala}
-            </option>
-          ))}
-        </select> */}
         {formik.touched.gejala_ids && formik.errors.gejala_ids && (
           <div className="text-sm text-red-500 mt-1">{formik.errors.gejala_ids}</div>
         )}
