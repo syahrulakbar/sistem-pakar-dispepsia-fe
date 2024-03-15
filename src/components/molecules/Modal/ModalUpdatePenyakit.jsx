@@ -1,11 +1,10 @@
-import { Button, Input } from "../../atoms";
+import { Button, Input, TextEditor } from "../../atoms";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Form from "../Form/Form";
 import { updatePenyakit } from "../../../config/Redux/Action";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
-import Editor from "react-simple-wysiwyg";
 
 export default function ModalUpdatePenyakit() {
   const { isUpdate } = useSelector((state) => state.globalReducer);
@@ -49,8 +48,11 @@ export default function ModalUpdatePenyakit() {
     <form onSubmit={formik.handleSubmit} className="px-6 py-2 flex flex-col gap-8">
       <Input id="nama_penyakit" label="Nama Penyakit" formik={formik} required />
       <div>
-        <label htmlFor="solusi">Solusi</label>
-        <Editor {...formik.getFieldProps("solusi")} id="solusi" />
+        <TextEditor
+          setFieldValue={(val) => formik.setFieldValue("solusi", val)}
+          value={formik.values.solusi}
+          label="Solusi"
+        />
         {formik.touched.solusi && formik.errors.solusi && (
           <p className="text-red-500 text-sm">{formik.errors.solusi}</p>
         )}

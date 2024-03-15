@@ -1,4 +1,4 @@
-import { Button, Input } from "../../atoms";
+import { Button, Input, TextEditor } from "../../atoms";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Form from "../Form/Form";
@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
 import { AiFillCamera } from "react-icons/ai";
 import { useState } from "react";
-import Editor from "react-simple-wysiwyg";
 
 export default function ModalUpdateBlog() {
   const { isUpdate } = useSelector((state) => state.globalReducer);
@@ -103,7 +102,11 @@ export default function ModalUpdateBlog() {
       </div>
       <Input id="title" label="Title" formik={formik} required />
       <div>
-        <Editor {...formik.getFieldProps("description")} id="description" />
+        <TextEditor
+          setFieldValue={(val) => formik.setFieldValue("description", val)}
+          value={formik.values.description}
+          label="Description"
+        />
         {formik.touched.description && formik.errors.description && (
           <p className="text-red-500 text-sm">{formik.errors.description}</p>
         )}

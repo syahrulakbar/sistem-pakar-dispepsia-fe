@@ -37,6 +37,7 @@ export default function ModalAddUser() {
       email: "",
       password: "",
       confirmPassword: "",
+      role: "1",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required"),
@@ -67,6 +68,22 @@ export default function ModalAddUser() {
         formik={formik}
         required
       />
+      <div>
+        <label htmlFor="role">Role</label>
+        <select
+          name="role"
+          id="role"
+          {...formik.getFieldProps("role")}
+          className={`focus:outline-none  disabled:bg-gray-200 disabled:cursor-not-allowed border-2  w-full h-10 p-2 rounded-lg   ${
+            formik.touched.role && formik.errors.role
+              ? "bg-red-100 border-red-300 focus:border-red-400"
+              : "focus:border-sky-400 border-slate-300"
+          }`}
+        >
+          <option value="1">User</option>
+          <option value="2">Admin</option>
+        </select>
+      </div>
       <Input
         icon={<CiLock />}
         id="password"
