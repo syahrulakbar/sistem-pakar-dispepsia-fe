@@ -9,6 +9,7 @@ export const loginAccount = async (data) => {
     await Axios.post(`${api}/login`, data, {
       withCredentials: true,
       headers: {
+        "ngrok-skip-browser-warning": true,
         "Content-Type": "application/json",
       },
     });

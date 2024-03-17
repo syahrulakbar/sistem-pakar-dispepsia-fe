@@ -8,6 +8,9 @@ const AxiosJWTConfig = async () => {
   const axiosJWT = axios.create({
     baseURL: api,
     withCredentials: true,
+    headers: {
+      "ngrok-skip-browser-warning": true,
+    },
   });
 
   axiosJWT.interceptors.request.use(
