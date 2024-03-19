@@ -101,22 +101,22 @@ export default function ModalUpdateBlog() {
               <AiFillCamera size={30} />
             </div>
           </div>
-          {imgPreview && (
-            <img
-              loading="lazy"
-              className="object-cover object-center absolute inset-0 w-full h-full p-1 border rounded-md"
-              src={imgPreview}
-              alt="Bordered avatar"
-            />
-          )}
           <input
             accept="image/*"
             id="image"
             name="image"
             type="file"
-            className="absolute z-10 p-0 h-[200px] opacity-0 cursor-pointer"
+            className="flex absolute w-full h-[200px] opacity-0  z-50 p-0  cursor-pointer justify-center items-center"
             onChange={(event) => handleChangeImage(event)}
           />
+          {imgPreview && (
+            <img
+              loading="lazy"
+              className="object-cover object-center  inset-0 w-full h-full p-1 border rounded-md"
+              src={imgPreview}
+              alt="Bordered avatar"
+            />
+          )}
         </div>
         {formik.errors.image && <p className="text-red-500 text-sm">{formik.errors.image}</p>}
       </div>
