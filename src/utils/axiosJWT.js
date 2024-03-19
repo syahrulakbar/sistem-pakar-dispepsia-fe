@@ -12,12 +12,14 @@ const AxiosJWTConfig = async () => {
       "ngrok-skip-browser-warning": true,
     },
   });
+  console.log(exp, "exp");
 
   axiosJWT.interceptors.request.use(
     async (config) => {
       const currentDate = new Date();
       if (exp < currentDate.getTime()) {
         try {
+          console.log("get new token");
           await axios.get(`${api}/users/token`, { withCredentials: true });
         } catch (error) {
           return Promise.reject(error);

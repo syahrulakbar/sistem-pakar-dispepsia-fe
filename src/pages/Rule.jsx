@@ -36,6 +36,7 @@ export default function Rule() {
     dispatch({ type: "SET_RULES", payload: rules });
     dispatch({ type: "SET_MODAL", payload: "add-rule" });
   };
+  console.log(rules);
 
   return (
     <>
@@ -78,7 +79,7 @@ export default function Rule() {
               <tr key={rule.id} className="odd:bg-white  even:bg-gray-50  border-b ">
                 <td className="px-6 py-4 text-center">{rule.id}</td>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                  {rule.penyakit?.nama_penyakit}
+                  {rule.penyakits?.nama_penyakit}
                 </th>
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                   {rule.gejalas?.map((gejala) => gejala.nama_gejala).join(", ")}
