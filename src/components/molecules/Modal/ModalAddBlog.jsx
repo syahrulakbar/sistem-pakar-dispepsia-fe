@@ -7,16 +7,35 @@ import Modal from "./Modal";
 import { addBlog } from "../../../config/Redux/Action";
 import { useState } from "react";
 import { AiFillCamera } from "react-icons/ai";
+import Axios from "axios";
 
 export default function ModalAddBlog() {
   const [imgPreview, setImgPreview] = useState(null);
 
   const { isUpdate } = useSelector((state) => state.globalReducer);
   const dispatch = useDispatch();
+  const cloudName = import.meta.env.VITE_CLOUD_NAME;
+
+  const imageUpload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "mrbuy3bg");
+
+      const response = await Axios.post(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        formData,
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async (values) => {
     try {
-      await addBlog(values);
+      const imageUrl = await imageUpload(values.image);
+      await addBlog({ ...values, image: imageUrl });
       dispatch({ type: "IS_UPDATE", payload: !isUpdate });
       dispatch({ type: "SET_MODAL", payload: false });
 

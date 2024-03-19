@@ -8,7 +8,6 @@ export default function Blog() {
   const [blogs, setBlogs] = useState([]);
   const [search, setSearch] = useState("");
   const { isUpdate } = useSelector((state) => state.globalReducer);
-  const api = import.meta.env.VITE_API_IMAGE;
 
   const dispatch = useDispatch();
 
@@ -56,7 +55,7 @@ export default function Blog() {
           >
             <img
               className="w-full h-[200px]  xl:w-1/4  object-cover bg-black"
-              src={api + blog?.image}
+              src={blog.image}
               alt={blog.title}
             />
             <div className="w-full xl:w-2/4 flex flex-col">

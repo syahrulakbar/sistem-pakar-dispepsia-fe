@@ -37,12 +37,8 @@ export const deleteBlog = async (blogId) => {
 
 export const updateBlog = async (values) => {
   try {
-    const formData = new FormData();
-    formData.append("title", values.title);
-    formData.append("description", values.description);
-    formData.append("image", values.image);
     const axiosJWT = await AxiosJWTConfig();
-    await axiosJWT.patch(`/blog/${values.id}`, formData);
+    await axiosJWT.patch(`/blog/${values.id}`, values);
     toast.success("Successfully Update Blog");
     return Promise.resolve({
       message: "Success Update Account",
@@ -58,13 +54,8 @@ export const updateBlog = async (values) => {
 };
 export const addBlog = async (values) => {
   try {
-    const formData = new FormData();
-    formData.append("title", values.title);
-    formData.append("description", values.description);
-    formData.append("image", values.image);
-
     const axiosJWT = await AxiosJWTConfig();
-    await axiosJWT.post(`/blog`, formData);
+    await axiosJWT.post(`/blog`, values);
     toast.success("Successfully Add Blog");
     return Promise.resolve({
       message: "Success Add Account",

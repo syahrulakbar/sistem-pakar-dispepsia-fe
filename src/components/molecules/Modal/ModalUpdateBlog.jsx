@@ -7,19 +7,40 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "./Modal";
 import { AiFillCamera } from "react-icons/ai";
 import { useState } from "react";
+import Axios from "axios";
 
 export default function ModalUpdateBlog() {
   const { isUpdate } = useSelector((state) => state.globalReducer);
   const { blog } = useSelector((state) => state.blogReducer);
   const dispatch = useDispatch();
   const { title, description, image } = blog;
-  const api = import.meta.env.VITE_API_IMAGE;
+  const cloudName = import.meta.env.VITE_CLOUD_NAME;
 
-  const [imgPreview, setImgPreview] = useState(api + blog?.image || null);
+  const [imgPreview, setImgPreview] = useState(blog?.image || null);
+
+  const imageUpload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "mrbuy3bg");
+
+      const response = await Axios.post(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
+        formData,
+      );
+      return response.data.secure_url;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleSubmit = async (values) => {
     try {
       values.id = blog.id;
+      if (values.image instanceof File) {
+        const imageUrl = await imageUpload(values.image);
+        values.image = imageUrl;
+      }
       await updateBlog(values);
       dispatch({ type: "IS_UPDATE", payload: !isUpdate });
       dispatch({ type: "SET_BLOG", payload: {} });
@@ -67,7 +88,6 @@ export default function ModalUpdateBlog() {
 
   const handleChangeImage = (event) => {
     const file = event.target.files[0];
-    console.log(file);
     formik.setFieldValue("image", file);
     setImgPreview(URL.createObjectURL(file));
   };
