@@ -6,7 +6,6 @@ import { AiOutlineMail } from "react-icons/ai";
 import { CiUser } from "react-icons/ci";
 import Form from "./Form";
 import { getAccountById, updateAccount } from "../../../config/Redux/Action";
-import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 
@@ -14,7 +13,7 @@ export default function FormSettingAccount() {
   const { isUpdate } = useSelector((state) => state.globalReducer);
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
-  const userId = Cookies.get("userId");
+  const userId = localStorage.getItem("userId");
 
   const handleSubmit = async (values) => {
     try {

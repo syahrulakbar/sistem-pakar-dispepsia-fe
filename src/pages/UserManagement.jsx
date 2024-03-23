@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
-import Cookies from "js-cookie";
 import { getAllAccount } from "../config/Redux/Action";
 import { Button } from "../components/atoms";
 import { CiSearch } from "react-icons/ci";
@@ -12,7 +11,7 @@ export default function UserManagement() {
   const { isUpdate } = useSelector((state) => state.globalReducer);
 
   const dispatch = useDispatch();
-  const userId = Cookies.get("userId");
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     getAllAccount(search).then((res) => {

@@ -1,16 +1,12 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
 const AxiosJWTConfig = async () => {
   const api = import.meta.env.VITE_API_SERVER;
-  let exp = Cookies.get("expire");
+  let exp = localStorage.getItem("exp");
 
   const axiosJWT = axios.create({
     baseURL: api,
     withCredentials: true,
-    headers: {
-      "ngrok-skip-browser-warning": true,
-    },
   });
   console.log(exp, "exp");
 
@@ -20,7 +16,9 @@ const AxiosJWTConfig = async () => {
       if (exp < currentDate.getTime()) {
         try {
           console.log("get new token");
-          await axios.get(`${api}/users/token`, { withCredentials: true });
+          const response = await axios.get(`${api}/users/token`, { withCredentials: true });
+          const { expire } = response.data.data;
+          localStorage.setItem("exp", expire);
         } catch (error) {
           return Promise.reject(error);
         }

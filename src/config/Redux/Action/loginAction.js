@@ -6,13 +6,15 @@ const api = import.meta.env.VITE_API_SERVER;
 
 export const loginAccount = async (data) => {
   try {
-    await Axios.post(`${api}/login`, data, {
+    const response = await Axios.post(`${api}/login`, data, {
       withCredentials: true,
       headers: {
-        "ngrok-skip-browser-warning": true,
         "Content-Type": "application/json",
       },
     });
+    const { userId, expire } = response.data.data;
+    localStorage.setItem("userId", userId);
+    localStorage.setItem("exp", expire);
 
     toast.success("Successfully Login");
 
@@ -34,6 +36,8 @@ export const logoutAccount = async () => {
     await Axios.delete(`${api}/logout`, {
       withCredentials: true,
     });
+    localStorage.removeItem("userId");
+    localStorage.removeItem("exp");
     toast.success("Successfully Logout");
 
     return Promise.resolve({
