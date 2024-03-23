@@ -6,7 +6,7 @@ const api = import.meta.env.VITE_API_SERVER;
 
 export const loginAccount = async (data) => {
   try {
-    const response = await Axios.post(`${api}/login`, data, {
+    const response = await Axios.post(`${api}/admin/login`, data, {
       withCredentials: true,
       headers: {
         "Content-Type": "application/json",

@@ -17,7 +17,10 @@ export default function FormSettingAccount() {
 
   const handleSubmit = async (values) => {
     try {
-      if (values.password === "") delete values.password;
+      if (values.password === "") {
+        delete values.password;
+        delete values.confirmPassword;
+      }
       values.id = userId;
       await updateAccount(values);
       dispatch({ type: "IS_UPDATE", payload: !isUpdate });

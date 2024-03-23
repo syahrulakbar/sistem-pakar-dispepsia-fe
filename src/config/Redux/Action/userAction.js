@@ -80,9 +80,9 @@ export const getAccountById = async (userId) => {
 export const checkIsAdmin = async () => {
   try {
     const axiosJWT = await AxiosJWTConfig();
-    await axiosJWT.get("/users/profile");
+    await axiosJWT.get("/users/admin");
     return Promise.resolve({
-      message: "Success Get Account",
+      message: "Success check Admin",
     });
   } catch (error) {
     console.error(error);
