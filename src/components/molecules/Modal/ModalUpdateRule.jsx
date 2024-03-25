@@ -10,7 +10,6 @@ import Select from "react-select";
 export default function ModalUpdateRule() {
   const { isUpdate, gejalas, penyakits, rule } = useSelector((state) => state.globalReducer);
   const dispatch = useDispatch();
-  console.log(rule);
 
   const optionGejala = gejalas.map((g) => ({ value: g.id, label: g.nama_gejala }));
 
@@ -35,7 +34,7 @@ export default function ModalUpdateRule() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      penyakit_id: rule?.penyakit.id || "",
+      penyakit_id: rule?.penyakits.id || "",
       gejala_ids: rule.gejalas.map((gejala) => gejala.id) || "",
     },
     validationSchema: Yup.object({

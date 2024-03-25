@@ -8,14 +8,12 @@ const AxiosJWTConfig = async () => {
     baseURL: api,
     withCredentials: true,
   });
-  console.log(exp, "exp");
 
   axiosJWT.interceptors.request.use(
     async (config) => {
       const currentDate = new Date();
       if (exp < currentDate.getTime()) {
         try {
-          console.log("get new token");
           const response = await axios.get(`${api}/users/token`, { withCredentials: true });
           const { expire } = response.data.data;
           localStorage.setItem("exp", expire);

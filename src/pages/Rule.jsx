@@ -36,7 +36,6 @@ export default function Rule() {
     dispatch({ type: "SET_RULES", payload: rules });
     dispatch({ type: "SET_MODAL", payload: "add-rule" });
   };
-  console.log(rules);
 
   return (
     <>
